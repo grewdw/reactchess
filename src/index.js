@@ -12,12 +12,16 @@ class Game extends React.Component {
             turn: 'W',
             selectedPiece: null,
             squares: getInitialSquares(),
+            message: 'Current turn: W'
         }
     }
     
     render() {
         return (
             <div className="game">
+                <div class = "game-info">
+                    <Message message = {this.state.message}/>
+                </div>
                 <div className="game-board">
                     <Board pieces = {this.state.squares} selected = {this.squareSelected}/>
                 </div>
@@ -43,14 +47,17 @@ class Game extends React.Component {
                 this.state.squares[existingSelection.square] = null;
                 this.state.squares[i] = existingSelection.piece;
                 var nextTurn = this.state.turn === 'W' ? 'B': 'W';
-                this.setState({turn: nextTurn, selectedPiece: null})
-                console.log("move executed");
+                this.setState({turn: nextTurn, selectedPiece: null, message: 'Current turn: ' + nextTurn})
             }
             else { 
-                console.log("invalid move")
+                this.setState({message: 'Invalid move'})
             }
         }
     }
+}
+
+function Message(prop) {
+    return <div>{prop.message}</div>
 }
 
 function Board(prop) {
